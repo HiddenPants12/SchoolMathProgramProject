@@ -1,6 +1,7 @@
 var m = math.create(math.all);
 
 var newImports = {};
+var backend = {imported: false};
 
 newImports['integrate'] = function(args, options, scope) {
     var dx = 10**-2;
@@ -20,12 +21,11 @@ m.import(newImports);
 Object.entries(newImports).map(f => {
     console.log('IMPORTED: ' + f[0]);
 })
+backend['imported'] = true;
 
-// Under this comment is the code for the local api that will be used by the frontent (MIT App Inventor)
-var backend = {};
-
-backend['evaluate'] = function (expression, scope = {}) {
-    var ret = {value: undefined, error: undefined};
+// Under this comment is the code for the local api that will be used by the frontend (MIT App Inventor)
+backend['evaluate'] = function (expression, scope = {}, id = '', callbackType = 'async') {
+    var ret = {value: undefined, error: undefined, id: id, type: 'evaluate', callback: callbackType};
     try {
         ret.value = m.evaluate(expression, scope);
     } catch (e) {
