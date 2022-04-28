@@ -33,3 +33,13 @@ backend['evaluate'] = function (expression, scope = {}, id = '', callbackType = 
     }
     return ret;
 }
+
+backend['runJS'] = function(args) {
+    var ret;
+    try {
+        ret = eval(args);
+    } catch(err) {
+        if (err) ret = err;
+    }
+    return ret;
+}
