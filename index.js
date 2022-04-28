@@ -16,6 +16,15 @@ newImports['integrate'] = function(args, options, scope) {
 }
 newImports['integrate'].rawArgs = true;
 
+newImports['tetrate'] = function(args, options, scope) {
+    var v = args[0];
+    for (let i = 0; i < args[1]; i++) {
+        v = v**v;
+    }
+    return v;
+}
+newImports['tetrate'].rawArgs = true;
+
 // Import the new functions
 m.import(newImports);
 Object.entries(newImports).map(f => {
