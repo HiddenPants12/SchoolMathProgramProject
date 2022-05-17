@@ -17,13 +17,44 @@ newImports['integrate'] = function(args, options, scope) {
 newImports['integrate'].rawArgs = true;
 
 newImports['tetrate'] = function(args, options, scope) {
-    var v = args[0];
-    for (let i = 0; i < args[1]; i++) {
-        v = v**v;
+    var v = args[0].value;
+    for (let i = 0; i < args[1].value - 1; i++) {
+        v = args[0].value**v;
     }
     return v;
 }
 newImports['tetrate'].rawArgs = true;
+
+newImports['logx'] = function(args, options, scope) {
+    return Math.log(args[0].value) / Math.log(args[1].value);
+}
+newImports['logx'].rawArgs = true;
+
+newImports['summate'] = function(args, options, scope) {
+    var iterations = Math.round(args[1].value);
+    var n = args[2].value;
+    var f = args[0].compile();
+    var sum = 0;
+
+    for (let i = n; i <= iterations; i++) {
+        sum += f.evaluate({'n': i});
+    }
+    return sum;
+}
+newImports['summate'].rawArgs = true;
+
+newImports['indef'] = function(args, options, scope) {
+    var iterations = Math.round(args[1].value);
+    var n = args[2].value;
+    var f = args[0].compile();
+    var sum = 1;
+
+    for (let i = n; i <= iterations; i++) {
+        sum *= f.evaluate({'n': i});
+    }
+    return sum;
+}
+newImports['indef'].rawArgs = true;
 
 // Import the new functions
 m.import(newImports);
